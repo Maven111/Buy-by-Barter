@@ -824,11 +824,14 @@
         });
 
         // Close modal buttons
-        document.querySelectorAll('[data-close-modal]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const modalId = btn.dataset.close-modal;
-                closeModal(modalId);
-            });
+        document.addEventListener('click', (e) => {
+            const closeBtn = e.target.closest('[data-close-modal]');
+            if (closeBtn) {
+                const modalId = closeBtn.getAttribute('data-close-modal') || closeBtn.dataset.closeModal;
+                if (modalId) {
+                    closeModal(modalId);
+                }
+            }
         });
 
         // Overlay click to close
