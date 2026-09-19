@@ -293,3 +293,13 @@ These questions will guide future product decisions.
 The central idea remains:
 
 > **People already own value. Buy by Barter helps them exchange that value for something they actually want.**
+
+PRODUCT DEVELOPED **VERSION 1**
+--------------------
+19th, sept, 2026.
+------------------
+
+Upon deployment of V1, I noticed some errors that need fixing. some of which is the search bar and cancel button on the home page
+I fixed the search bar on the home page to make it clickable and make entry visible.
+I also successfully fixed the cancel button to make it function upon clicking
+
