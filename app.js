@@ -59,7 +59,11 @@
         { name: 'Talking Drum (Gangan)', url: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=600&q=80' },
         { name: 'Bata Drum', url: 'https://images.unsplash.com/photo-1543791187-df796fa11835?auto=format&fit=crop&w=600&q=80' },
         { name: 'Traditional Flute (Oja)', url: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80' },
-        { name: 'Yamaha Keyboard', url: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80' }
+        { name: 'Yamaha Keyboard', url: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Things Fall Apart Book', url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80' },
+        { name: 'African Literature Novel', url: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80' },
+        { name: 'Books Slipcase Box Set', url: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=600&q=80' },
+        { name: 'JAMB & WAEC Prep Books', url: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80' }
     ];
 
     // NIGERIAN PERSONA USERS
@@ -424,6 +428,72 @@
             allowTopUp: true,
             status: 'available',
             createdAt: '2026-08-29T11:55:00Z'
+        },
+
+        // --- BOOKS & LITERATURE ---
+        {
+            id: 'item_book_1',
+            ownerId: 'usr_amina',
+            title: 'Things Fall Apart by Chinua Achebe (50th Anniversary Hardcover)',
+            category: 'Books',
+            condition: 'Like New',
+            estimatedValue: 18000,
+            location: 'Wuse II, Abuja',
+            distanceKm: 3.2,
+            imageUrl: PRESET_IMAGES[20].url,
+            description: 'Collector’s edition hardcover of Chinua Achebe’s timeless African masterpiece. Complete with dust jacket and gold embossed spine.',
+            wishlist: 'Looking for vintage cameras, analog gadgets, or African poetry books.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T12:00:00Z'
+        },
+        {
+            id: 'item_book_2',
+            ownerId: 'usr_funke',
+            title: 'The Secret Lives of Baba Segi’s Wives by Lola Shoneyin (Autographed)',
+            category: 'Books',
+            condition: 'Like New',
+            estimatedValue: 22000,
+            location: 'Bodija, Ibadan',
+            distanceKm: 11.0,
+            imageUrl: PRESET_IMAGES[21].url,
+            description: 'Autographed copy of Lola Shoneyin’s hilarious and moving tale of modern polygamy in Ibadan. Clean interior, unbent spine.',
+            wishlist: 'Looking for Talking Drum (Gangan), vinyl records, or fashion accessories.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T12:10:00Z'
+        },
+        {
+            id: 'item_book_3',
+            ownerId: 'usr_tunde',
+            title: 'Half of a Yellow Sun & Americanah Box Set by Chimamanda Adichie',
+            category: 'Books',
+            condition: 'Brand New',
+            estimatedValue: 35000,
+            location: 'Yaba, Lagos',
+            distanceKm: 2.0,
+            imageUrl: PRESET_IMAGES[22].url,
+            description: 'Sealed 2-book hardcover gift box set including Half of a Yellow Sun and Americanah. Brand new condition.',
+            wishlist: 'Looking for Keychron keyboard, headphones, or retro Walkman phone.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T12:20:00Z'
+        },
+        {
+            id: 'item_book_4',
+            ownerId: 'usr_chidi',
+            title: 'Complete JAMB UTME & WAEC Exam Prep Series (Sciences & Math)',
+            category: 'Books',
+            condition: 'Good',
+            estimatedValue: 15000,
+            location: 'Lekki Phase 1, Lagos',
+            distanceKm: 6.0,
+            imageUrl: PRESET_IMAGES[23].url,
+            description: '4-book past questions and detailed step-by-step solution guides for JAMB UTME Physics, Chemistry, Biology, and Mathematics.',
+            wishlist: 'Looking for dumbbells, power bank, or Oja whistle flute.',
+            allowTopUp: true,
+            status: 'available',
+            createdAt: '2026-08-29T12:30:00Z'
         }
     ];
 
@@ -583,7 +653,11 @@
             const theme = localStorage.getItem(STORAGE_KEYS.THEME);
 
             if (theme) state.theme = theme;
-            if (isLoggedIn !== null) state.isLoggedIn = JSON.parse(isLoggedIn);
+            if (isLoggedIn !== null) {
+                state.isLoggedIn = JSON.parse(isLoggedIn);
+            } else {
+                state.isLoggedIn = true;
+            }
 
             if (usersData && itemsData && offersData) {
                 state.users = JSON.parse(usersData);
@@ -591,6 +665,12 @@
                 state.offers = JSON.parse(offersData);
                 state.messages = messagesData ? JSON.parse(messagesData) : [];
                 if (activeUser) state.activeUserId = activeUser;
+
+                // Guarantee listings exist if array was empty or outdated
+                if (!state.items || state.items.length === 0) {
+                    state.items = INITIAL_ITEMS;
+                    saveState();
+                }
             } else {
                 state.users = INITIAL_USERS;
                 state.items = INITIAL_ITEMS;

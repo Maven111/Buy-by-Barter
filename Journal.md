@@ -314,9 +314,15 @@ I also successfully fixed the cancel button to make it function upon clicking
    - Resolved CSS layout issues in `.main-header` and `.header-right` where the "Barter an item" button extended beyond normal screen bounds on small and medium screens.
    - Implemented responsive header flex wrapping, button compacting, and a dedicated Floating Action Button (FAB) for mobile and tablet viewports to guarantee the button stays strictly inside screen boundaries.
 
-2. **Added User Log In & Authentication System**:
-   - Added a full Log In and Sign Up modal system with tabs for standard account credentials and fast 1-click persona logins.
-   - Added header Log In / Log Out action buttons (`#open-login-btn` & `#logout-btn`) with persistent session management in LocalStorage.
-   - Integrated authentication checks into trade proposals and barter creation forms to prompt guest users to log in or create an account.
+3. **Header Alignment & Button Positioning Updates**:
+   - Relocated the Light/Dark mode toggle button (`#theme-toggle-btn`) to a fixed position at the **bottom left** of the viewport.
+   - Set default application state to **LOGGED IN** (`state.isLoggedIn = true`) as Tunde Bakare.
+   - Relocated the Sign Out button (`#logout-btn`) to a fixed floating control dock at the **bottom right** of the viewport.
+   - Streamlined and aligned top header buttons (`#nav-feed-btn`, `#nav-closet-btn`, `#nav-inbox-btn`, `#open-add-item-modal-btn`, persona switcher) into a clean horizontal toolbar.
+
+4. **Added "Books" Category & Nigerian Centric Listings**:
+   - Added **Books** as a top-level category filter pill in the marketplace and option in item creation modals.
+   - Added curated Nigerian literature and academic books (*Things Fall Apart by Chinua Achebe*, *The Secret Lives of Baba Segi's Wives by Lola Shoneyin*, *Half of a Yellow Sun Box Set by Chimamanda Adichie*, *JAMB/WAEC Prep Series*) to baseline demo data.
+   - Implemented automatic initial listings fallback so marketplace grid always displays active Nigerian items on app initialization.
 
 

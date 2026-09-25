@@ -38,15 +38,9 @@
                     </button>
                 </div>
 
-                <!-- User Switcher & Theme Toggle & Navigation Controls -->
+                <!-- Navigation & User Persona Controls -->
                 <div class="header-right">
-                    <!-- Light / Dark Theme Switcher Toggle -->
-                    <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light / Dark Theme">
-                        <i class="fa-solid fa-sun" id="theme-icon"></i>
-                        <span id="theme-text">Light</span>
-                    </button>
-
-                    <!-- User Switcher Dropdown (P2P Simulator) -->
+                    <!-- User Persona Switcher -->
                     <div class="user-switcher-container">
                         <span class="user-switch-label"><i class="fa-solid fa-user-gear"></i> Active Persona:</span>
                         <div class="user-select-wrapper">
@@ -56,18 +50,7 @@
                         </div>
                     </div>
 
-                    <!-- Log In / Log Out Authentication Action Buttons -->
-                    <button class="nav-btn btn-auth-trigger" id="open-login-btn" title="Log In or Create Account">
-                        <i class="fa-solid fa-right-to-bracket"></i>
-                        <span class="nav-btn-text">Log In</span>
-                    </button>
-
-                    <button class="nav-btn hidden" id="logout-btn" title="Log Out of Current Session">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span class="nav-btn-text">Log Out</span>
-                    </button>
-
-                    <!-- Navigation Action Buttons -->
+                    <!-- Main Navigation Buttons -->
                     <button class="nav-btn" id="nav-feed-btn" title="Explore Marketplace">
                         <i class="fa-solid fa-compass"></i>
                         <span class="nav-btn-text">Marketplace</span>
@@ -85,6 +68,13 @@
                         <span class="badge-count badge-accent" id="inbox-count-badge">0</span>
                     </button>
 
+                    <!-- Log In Button (Shown when logged out) -->
+                    <button class="nav-btn btn-auth-trigger hidden" id="open-login-btn" title="Log In or Create Account">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span class="nav-btn-text">Log In</span>
+                    </button>
+
+                    <!-- Primary Action Button -->
                     <button class="btn btn-primary" id="open-add-item-modal-btn">
                         <i class="fa-solid fa-plus"></i>
                         <span>Barter an item</span>
@@ -141,6 +131,9 @@
                     </button>
                     <button class="pill-btn" data-category="Music & Audio">
                         <i class="fa-solid fa-guitar"></i> Music & Audio
+                    </button>
+                    <button class="pill-btn" data-category="Books">
+                        <i class="fa-solid fa-book"></i> Books
                     </button>
                     <button class="pill-btn" data-category="Home & Tools">
                         <i class="fa-solid fa-couch"></i> Home & Tools
@@ -472,6 +465,7 @@
                                 <option value="Vintage & Fashion">Vintage & Fashion</option>
                                 <option value="Gaming & Tech">Gaming & Tech</option>
                                 <option value="Music & Audio">Music & Audio</option>
+                                <option value="Books">Books & Literature</option>
                                 <option value="Home & Tools">Home & Tools</option>
                             </select>
                         </div>
@@ -630,11 +624,24 @@
             </div>
         </div>
 
-        <!-- FLOATING ACTION BUTTON (FAB) FOR BARTER CREATION ON MOBILE/TABLET -->
-        <button id="fab-add-item-btn" class="fab-barter-btn" title="Barter an Item">
-            <i class="fa-solid fa-plus"></i>
-            <span>Barter an Item</span>
+        <!-- FIXED BOTTOM-LEFT LIGHT / DARK THEME SWITCHER TOGGLE -->
+        <button id="theme-toggle-btn" class="theme-toggle-fixed" title="Toggle Light / Dark Theme">
+            <i class="fa-solid fa-sun" id="theme-icon"></i>
+            <span id="theme-text">Light Theme</span>
         </button>
+
+        <!-- FIXED BOTTOM-RIGHT DOCK FOR BARTER FAB & SIGN OUT BUTTON -->
+        <div class="bottom-right-dock">
+            <button id="fab-add-item-btn" class="fab-barter-btn" title="Barter an Item">
+                <i class="fa-solid fa-plus"></i>
+                <span>Barter an Item</span>
+            </button>
+
+            <button class="logout-btn-fixed" id="logout-btn" title="Log Out of Current Session">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Sign Out</span>
+            </button>
+        </div>
 
         <!-- TOAST NOTIFICATION CONTAINER -->
         <div id="toast-container" class="toast-container"></div>

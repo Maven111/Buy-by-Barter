@@ -294,12 +294,85 @@ body.dark-theme .theme-toggle-btn:hover {
     justify-content: flex-end;
 }
 
-/* FLOATING ACTION BUTTON (FAB) FOR MOBILE / TABLET */
-.fab-barter-btn {
+/* FIXED BOTTOM-LEFT THEME TOGGLE BUTTON */
+.theme-toggle-fixed {
     position: fixed;
-    bottom: 1.75rem;
-    right: 1.75rem;
-    z-index: 999;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 30px;
+    padding: 0.65rem 1.15rem;
+    color: #0f172a;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-theme .theme-toggle-fixed {
+    background-color: #1e293b;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle-fixed:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+/* FIXED BOTTOM-RIGHT CONTROL DOCK (SIGN OUT & BARTER FAB) */
+.bottom-right-dock {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
+.logout-btn-fixed {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    color: #ef4444;
+    border: 1.5px solid #fca5a5;
+    border-radius: 30px;
+    padding: 0.65rem 1.15rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+    backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-theme .logout-btn-fixed {
+    background-color: #1e293b;
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.logout-btn-fixed:hover {
+    background-color: #ef4444;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(239, 68, 68, 0.4);
+}
+
+/* FLOATING ACTION BUTTON (FAB) FOR BARTER CREATION ON MOBILE/TABLET */
+.fab-barter-btn {
     display: none;
     align-items: center;
     justify-content: center;
