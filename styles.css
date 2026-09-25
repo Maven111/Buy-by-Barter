@@ -289,6 +289,42 @@ body.dark-theme .theme-toggle-btn:hover {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: flex-end;
+}
+
+/* FLOATING ACTION BUTTON (FAB) FOR MOBILE / TABLET */
+.fab-barter-btn {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    z-index: 999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: #ffffff;
+    padding: 0.85rem 1.4rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 25px rgba(5, 150, 105, 0.45);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-theme .fab-barter-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.fab-barter-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px rgba(5, 150, 105, 0.6);
 }
 
 .user-switcher-container {
@@ -1239,7 +1275,7 @@ body.dark-theme .modal-close-btn:hover {
     padding: 2rem;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
     .header-inner {
         flex-wrap: wrap;
         gap: 0.85rem;
@@ -1249,6 +1285,65 @@ body.dark-theme .modal-close-btn:hover {
         order: 3;
         flex: 1 1 100%;
         max-width: 100%;
+    }
+
+    .header-right {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-btn-text {
+        display: none;
+    }
+    .user-switch-label span {
+        display: none;
+    }
+    .theme-toggle-btn span {
+        display: none;
+    }
+    #open-add-item-modal-btn span {
+        display: inline;
+    }
+    .fab-barter-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0.65rem 1rem;
+    }
+
+    .brand-title {
+        font-size: 1.15rem;
+    }
+
+    .header-right {
+        gap: 0.35rem;
+    }
+
+    #open-add-item-modal-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.825rem;
+    }
+
+    .item-detail-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    #open-add-item-modal-btn span {
+        display: none; /* Icon-only in compact header on ultra-small screens */
+    }
+
+    #open-add-item-modal-btn {
+        padding: 0.5rem;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
     }
 }
 
@@ -2344,3 +2439,93 @@ body.dark-theme .toast {
 /* UTILITY CLASSES */
 .mt-2 { margin-top: 0.5rem; }
 .hidden { display: none !important; }
+
+/* ==========================================================================
+   MODAL 6: AUTHENTICATION / LOG IN STYLES
+   ========================================================================== */
+.btn-auth-trigger {
+    background-color: rgba(5, 150, 105, 0.12);
+    color: #059669;
+    border-color: rgba(5, 150, 105, 0.3);
+}
+
+body.dark-theme .btn-auth-trigger {
+    background-color: rgba(99, 102, 241, 0.18);
+    color: #818cf8;
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.btn-auth-trigger:hover {
+    background-color: #059669;
+    color: #ffffff;
+}
+
+body.dark-theme .btn-auth-trigger:hover {
+    background-color: #6366f1;
+    color: #ffffff;
+}
+
+.auth-tab-pane {
+    padding: 0;
+}
+
+.quick-login-section {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    margin-top: 0.25rem;
+}
+
+body.dark-theme .quick-login-section {
+    background-color: rgba(30, 41, 59, 0.5);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.quick-login-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.quick-user-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+body.dark-theme .quick-user-pill {
+    background-color: #1e293b;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #f1f5f9;
+}
+
+.quick-user-pill:hover {
+    background-color: rgba(5, 150, 105, 0.1);
+    border-color: #059669;
+    color: #059669;
+    transform: translateY(-1px);
+}
+
+body.dark-theme .quick-user-pill:hover {
+    background-color: rgba(99, 102, 241, 0.2);
+    border-color: #6366f1;
+    color: #818cf8;
+}
+
+.quick-user-pill img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+}

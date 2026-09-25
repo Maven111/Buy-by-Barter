@@ -56,6 +56,17 @@
                         </div>
                     </div>
 
+                    <!-- Log In / Log Out Authentication Action Buttons -->
+                    <button class="nav-btn btn-auth-trigger" id="open-login-btn" title="Log In or Create Account">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span class="nav-btn-text">Log In</span>
+                    </button>
+
+                    <button class="nav-btn hidden" id="logout-btn" title="Log Out of Current Session">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span class="nav-btn-text">Log Out</span>
+                    </button>
+
                     <!-- Navigation Action Buttons -->
                     <button class="nav-btn" id="nav-feed-btn" title="Explore Marketplace">
                         <i class="fa-solid fa-compass"></i>
@@ -526,6 +537,104 @@
                 </form>
             </div>
         </div>
+
+        <!-- MODAL 6: AUTHENTICATION / LOG IN MODAL -->
+        <div class="modal-overlay hidden" id="auth-modal">
+            <div class="modal-card modal-md">
+                <button class="modal-close-btn" data-close-modal="auth-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="modal-header-nav">
+                    <h2><i class="fa-solid fa-user-lock"></i> Account Log In</h2>
+                    <div class="inbox-tabs">
+                        <button class="inbox-tab-btn active" id="tab-auth-login" data-authtab="login">
+                            <i class="fa-solid fa-right-to-bracket"></i> Log In
+                        </button>
+                        <button class="inbox-tab-btn" id="tab-auth-signup" data-authtab="signup">
+                            <i class="fa-solid fa-user-plus"></i> Sign Up
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TAB 1: LOG IN FORM -->
+                <div class="auth-tab-pane" id="pane-auth-login">
+                    <form id="login-form" class="modal-form">
+                        <div class="form-group">
+                            <label for="login-email-input">Email address or Username <span class="required">*</span></label>
+                            <input type="text" id="login-email-input" required placeholder="e.g. tunde@barter.ng or Tunde Bakare">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password-input">Password <span class="required">*</span></label>
+                            <input type="password" id="login-password-input" required placeholder="Enter password (e.g. demo123)">
+                        </div>
+
+                        <!-- QUICK PERSONA SWITCHER FOR CONVENIENT DEMO LOG IN -->
+                        <div class="quick-login-section">
+                            <label class="section-label">
+                                <i class="fa-solid fa-bolt"></i> Fast 1-Click Persona Log In:
+                            </label>
+                            <div class="quick-login-pills" id="quick-login-pills">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" data-close-modal="auth-modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-right-to-bracket"></i> Log In Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 2: SIGN UP / REGISTER FORM -->
+                <div class="auth-tab-pane hidden" id="pane-auth-signup">
+                    <form id="signup-form" class="modal-form">
+                        <div class="form-group">
+                            <label for="signup-name-input">Full Name <span class="required">*</span></label>
+                            <input type="text" id="signup-name-input" required placeholder="e.g. Emeka Nwosu">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="signup-email-input">Email Address <span class="required">*</span></label>
+                                <input type="email" id="signup-email-input" required placeholder="emeka@barter.ng">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signup-password-input">Password <span class="required">*</span></label>
+                                <input type="password" id="signup-password-input" required placeholder="Create password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-location-input">City / Neighborhood <span class="required">*</span></label>
+                            <input type="text" id="signup-location-input" required placeholder="e.g. Ikeja, Lagos or Wuse II, Abuja">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-bio-input">Short Bio & Barter Wishlist</label>
+                            <textarea id="signup-bio-input" rows="2" placeholder="Describe items you want to trade or look for..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" data-close-modal="auth-modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-user-plus"></i> Create Free Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOATING ACTION BUTTON (FAB) FOR BARTER CREATION ON MOBILE/TABLET -->
+        <button id="fab-add-item-btn" class="fab-barter-btn" title="Barter an Item">
+            <i class="fa-solid fa-plus"></i>
+            <span>Barter an Item</span>
+        </button>
 
         <!-- TOAST NOTIFICATION CONTAINER -->
         <div id="toast-container" class="toast-container"></div>

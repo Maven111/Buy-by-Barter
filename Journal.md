@@ -303,3 +303,20 @@ Upon deployment of V1, I noticed some errors that need fixing. some of which is 
 I fixed the search bar on the home page to make it clickable and make entry visible.
 I also successfully fixed the cancel button to make it function upon clicking
 
+---
+
+# Fixes & Authentication Updates
+
+25th Sept, 2026.
+------------------
+
+1. **Fixed Create Barter Button Screen Overflow**:
+   - Resolved CSS layout issues in `.main-header` and `.header-right` where the "Barter an item" button extended beyond normal screen bounds on small and medium screens.
+   - Implemented responsive header flex wrapping, button compacting, and a dedicated Floating Action Button (FAB) for mobile and tablet viewports to guarantee the button stays strictly inside screen boundaries.
+
+2. **Added User Log In & Authentication System**:
+   - Added a full Log In and Sign Up modal system with tabs for standard account credentials and fast 1-click persona logins.
+   - Added header Log In / Log Out action buttons (`#open-login-btn` & `#logout-btn`) with persistent session management in LocalStorage.
+   - Integrated authentication checks into trade proposals and barter creation forms to prompt guest users to log in or create an account.
+
+

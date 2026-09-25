@@ -13,7 +13,29 @@
         OFFERS: 'bbb_offers_v4',
         MESSAGES: 'bbb_messages_v4',
         ACTIVE_USER: 'bbb_active_user_v4',
+        IS_LOGGED_IN: 'bbb_is_logged_in_v4',
         THEME: 'bbb_theme_v4'
+    };
+
+    // APPLICATION STATE
+    const state = {
+        users: [],
+        items: [],
+        offers: [],
+        messages: [],
+        activeUserId: 'usr_tunde',
+        isLoggedIn: true,
+        authTab: 'login',
+        theme: 'light', // 'light' (default) | 'dark'
+        currentView: 'marketplace', // 'marketplace' | 'closet'
+        searchQuery: '',
+        activeCategory: 'all',
+        maxDistanceKm: 'all', // 'all' | '3' | '5' | '10' | '25'
+        topUpFilter: 'all', // 'all' | 'topup' | 'straight'
+        sortBy: 'newest', // 'newest' | 'value-desc' | 'value-asc' | 'distance'
+        selectedTargetItem: null,
+        selectedOfferItemIds: [],
+        activeChatOfferId: null
     };
 
     // HIGH-QUALITY PRESET IMAGE URLS FOR CLEAN DEMO LISTINGS
@@ -514,11 +536,24 @@
         chatMessageInput: document.getElementById('chat-message-input'),
         completeTradeBtn: document.getElementById('complete-trade-btn'),
 
-        addItemModal: document.getElementById('add-item-modal'),
-        addItemForm: document.getElementById('add-item-form'),
-        imagePresetPicker: document.getElementById('image-preset-picker'),
-        itemImageUrl: document.getElementById('item-image-url'),
-        itemFileInput: document.getElementById('item-file-input'),
+        // Auth & Header Elements
+        openLoginBtn: document.getElementById('open-login-btn'),
+        logoutBtn: document.getElementById('logout-btn'),
+        authModal: document.getElementById('auth-modal'),
+        tabAuthLogin: document.getElementById('tab-auth-login'),
+        tabAuthSignup: document.getElementById('tab-auth-signup'),
+        paneAuthLogin: document.getElementById('pane-auth-login'),
+        paneAuthSignup: document.getElementById('pane-auth-signup'),
+        loginForm: document.getElementById('login-form'),
+        loginEmailInput: document.getElementById('login-email-input'),
+        loginPasswordInput: document.getElementById('login-password-input'),
+        quickLoginPills: document.getElementById('quick-login-pills'),
+        signupForm: document.getElementById('signup-form'),
+        signupNameInput: document.getElementById('signup-name-input'),
+        signupEmailInput: document.getElementById('signup-email-input'),
+        signupPasswordInput: document.getElementById('signup-password-input'),
+        signupLocationInput: document.getElementById('signup-location-input'),
+        signupBioInput: document.getElementById('signup-bio-input'),
 
         toastContainer: document.getElementById('toast-container')
     };
@@ -529,7 +564,9 @@
     function initApp() {
         loadState();
         applyTheme();
+        updateAuthUI();
         setupUserPersonaDropdown();
+        setupQuickLoginPills();
         setupPresetImagesPicker();
         bindEvents();
         render();
@@ -542,9 +579,11 @@
             const offersData = localStorage.getItem(STORAGE_KEYS.OFFERS);
             const messagesData = localStorage.getItem(STORAGE_KEYS.MESSAGES);
             const activeUser = localStorage.getItem(STORAGE_KEYS.ACTIVE_USER);
+            const isLoggedIn = localStorage.getItem(STORAGE_KEYS.IS_LOGGED_IN);
             const theme = localStorage.getItem(STORAGE_KEYS.THEME);
 
             if (theme) state.theme = theme;
+            if (isLoggedIn !== null) state.isLoggedIn = JSON.parse(isLoggedIn);
 
             if (usersData && itemsData && offersData) {
                 state.users = JSON.parse(usersData);
@@ -558,6 +597,7 @@
                 state.offers = INITIAL_OFFERS;
                 state.messages = INITIAL_MESSAGES;
                 state.activeUserId = 'usr_tunde';
+                state.isLoggedIn = true;
                 saveState();
             }
         } catch (e) {
@@ -567,6 +607,7 @@
             state.offers = INITIAL_OFFERS;
             state.messages = INITIAL_MESSAGES;
             state.activeUserId = 'usr_tunde';
+            state.isLoggedIn = true;
         }
     }
 
@@ -577,6 +618,7 @@
             localStorage.setItem(STORAGE_KEYS.OFFERS, JSON.stringify(state.offers));
             localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(state.messages));
             localStorage.setItem(STORAGE_KEYS.ACTIVE_USER, state.activeUserId);
+            localStorage.setItem(STORAGE_KEYS.IS_LOGGED_IN, JSON.stringify(state.isLoggedIn));
             localStorage.setItem(STORAGE_KEYS.THEME, state.theme);
         } catch (e) {
             console.error('Error saving state to LocalStorage:', e);
@@ -678,38 +720,130 @@
     }
 
     /* ==========================================================================
-       USER PERSONA & HEADER CONTROLS
+       USER AUTHENTICATION & PERSONA MODULE
        ========================================================================== */
-    function setupUserPersonaDropdown() {
-        DOM.userPersonaSelect.innerHTML = '';
-        state.users.forEach(user => {
-            const option = document.createElement('option');
-            option.value = user.id;
-            option.textContent = `👤 ${user.name} (${user.location})`;
-            if (user.id === state.activeUserId) option.selected = true;
-            DOM.userPersonaSelect.appendChild(option);
-        });
-        updatePersonaHeaderDisplay();
-    }
-
-    function updatePersonaHeaderDisplay() {
-        const currentUser = getActiveUser();
-        if (currentUser) {
-            DOM.activePersonaAvatar.src = currentUser.avatar;
-            DOM.activePersonaName.textContent = currentUser.name.split(' ')[0];
+    function updateAuthUI() {
+        if (state.isLoggedIn) {
+            if (DOM.openLoginBtn) DOM.openLoginBtn.classList.add('hidden');
+            if (DOM.logoutBtn) DOM.logoutBtn.classList.remove('hidden');
+            const currentUser = getActiveUser();
+            if (DOM.activePersonaName) DOM.activePersonaName.textContent = currentUser.name.split(' ')[0];
+            if (DOM.activePersonaAvatar) DOM.activePersonaAvatar.src = currentUser.avatar;
+        } else {
+            if (DOM.openLoginBtn) DOM.openLoginBtn.classList.remove('hidden');
+            if (DOM.logoutBtn) DOM.logoutBtn.classList.add('hidden');
+            if (DOM.activePersonaName) DOM.activePersonaName.textContent = 'Guest (Logged Out)';
+            if (DOM.activePersonaAvatar) DOM.activePersonaAvatar.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
         }
     }
 
-    function getActiveUser() {
-        return state.users.find(u => u.id === state.activeUserId) || state.users[0];
+    function setupQuickLoginPills() {
+        if (!DOM.quickLoginPills) return;
+        DOM.quickLoginPills.innerHTML = '';
+        state.users.forEach(user => {
+            const pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'quick-user-pill';
+            pill.innerHTML = `
+                <img src="${user.avatar}" alt="${escapeHtml(user.name)}">
+                <span>${escapeHtml(user.name.split(' ')[0])}</span>
+            `;
+            pill.addEventListener('click', () => {
+                loginUser(user.id, user.name);
+            });
+            DOM.quickLoginPills.appendChild(pill);
+        });
     }
 
-    function getUserById(userId) {
-        return state.users.find(u => u.id === userId) || { name: 'Unknown', avatar: '', location: '' };
+    function loginUser(userId, userName) {
+        state.isLoggedIn = true;
+        state.activeUserId = userId;
+        saveState();
+        updateAuthUI();
+        setupUserPersonaDropdown();
+        closeModal('auth-modal');
+        const user = getUserById(userId);
+        showToast(`Welcome back, ${userName || user.name}! You are logged in.`, 'success');
+        render();
     }
 
-    function getItemById(itemId) {
-        return state.items.find(i => i.id === itemId);
+    function logoutUser() {
+        state.isLoggedIn = false;
+        saveState();
+        updateAuthUI();
+        showToast('Logged out of Buy by Barter.', 'info');
+        render();
+    }
+
+    function switchAuthTab(tab) {
+        state.authTab = tab;
+        if (tab === 'login') {
+            DOM.tabAuthLogin.classList.add('active');
+            DOM.tabAuthSignup.classList.remove('active');
+            DOM.paneAuthLogin.classList.remove('hidden');
+            DOM.paneAuthSignup.classList.add('hidden');
+        } else {
+            DOM.tabAuthLogin.classList.remove('active');
+            DOM.tabAuthSignup.classList.add('active');
+            DOM.paneAuthLogin.classList.add('hidden');
+            DOM.paneAuthSignup.classList.remove('hidden');
+        }
+    }
+
+    function handleLoginFormSubmit(e) {
+        e.preventDefault();
+        const inputVal = DOM.loginEmailInput.value.trim().toLowerCase();
+        if (!inputVal) return;
+
+        const matched = state.users.find(u => 
+            (u.email && u.email.toLowerCase() === inputVal) || 
+            u.name.toLowerCase().includes(inputVal) ||
+            u.id.toLowerCase() === inputVal
+        );
+
+        if (matched) {
+            loginUser(matched.id, matched.name);
+        } else {
+            loginUser(state.activeUserId, DOM.loginEmailInput.value.trim());
+        }
+        DOM.loginForm.reset();
+    }
+
+    function handleSignupFormSubmit(e) {
+        e.preventDefault();
+        const name = DOM.signupNameInput.value.trim();
+        const email = DOM.signupEmailInput.value.trim();
+        const location = DOM.signupLocationInput.value.trim();
+        const bio = DOM.signupBioInput.value.trim();
+
+        if (!name || !location) {
+            alert('Please enter your Name and Location.');
+            return;
+        }
+
+        const newUser = {
+            id: 'usr_' + Date.now(),
+            name,
+            email: email || `${name.toLowerCase().replace(/\s+/g, '')}@barter.ng`,
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+            bio: bio || 'Active Nigerian barter member.',
+            location
+        };
+
+        state.users.push(newUser);
+        saveState();
+        setupQuickLoginPills();
+        loginUser(newUser.id, newUser.name);
+        DOM.signupForm.reset();
+    }
+
+    function checkAuthOrPrompt() {
+        if (!state.isLoggedIn) {
+            showToast('Please log in or sign up to create a barter or trade proposal!', 'warning');
+            openModal('auth-modal');
+            return false;
+        }
+        return true;
     }
 
     /* ==========================================================================
@@ -810,8 +944,23 @@
             if (file) importDataFromJson(file);
         });
 
+        // Authentication Handlers
+        if (DOM.openLoginBtn) DOM.openLoginBtn.addEventListener('click', () => openModal('auth-modal'));
+        if (DOM.logoutBtn) DOM.logoutBtn.addEventListener('click', logoutUser);
+        if (DOM.tabAuthLogin) DOM.tabAuthLogin.addEventListener('click', () => switchAuthTab('login'));
+        if (DOM.tabAuthSignup) DOM.tabAuthSignup.addEventListener('click', () => switchAuthTab('signup'));
+        if (DOM.loginForm) DOM.loginForm.addEventListener('submit', handleLoginFormSubmit);
+        if (DOM.signupForm) DOM.signupForm.addEventListener('submit', handleSignupFormSubmit);
+
         // Modals Open / Close handlers
-        DOM.openAddItemModalBtn.addEventListener('click', () => openModal('add-item-modal'));
+        DOM.openAddItemModalBtn.addEventListener('click', () => {
+            if (checkAuthOrPrompt()) openModal('add-item-modal');
+        });
+        if (DOM.fabAddItemBtn) {
+            DOM.fabAddItemBtn.addEventListener('click', () => {
+                if (checkAuthOrPrompt()) openModal('add-item-modal');
+            });
+        }
         DOM.navInboxBtn.addEventListener('click', () => {
             renderInboxContent();
             openModal('inbox-modal');
@@ -1121,6 +1270,7 @@
        MODAL 2: BARTER DEAL BUILDER (THE TRADE PROPOSAL MATRIX)
        ========================================================================== */
     function openTradeBuilderModal(targetItem) {
+        if (!checkAuthOrPrompt()) return;
         state.selectedTargetItem = targetItem;
         state.selectedOfferItemIds = [];
 
