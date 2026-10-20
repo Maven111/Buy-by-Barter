@@ -97,7 +97,8 @@ body.dark-theme .main-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.25rem;
+    gap: 1rem;
+    min-height: 64px;
 }
 
 /* BRAND LOGO */
@@ -307,9 +308,9 @@ body.dark-theme .theme-toggle-fixed {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    max-width: 100%;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
     justify-content: flex-end;
 }
 
@@ -392,7 +393,8 @@ body.dark-theme .fab-barter-btn {
     background-color: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: 20px;
-    padding: 0.35rem 0.75rem;
+    padding: 0 0.85rem;
+    height: 40px;
 }
 
 body.dark-theme .user-switcher-container {
@@ -444,16 +446,19 @@ body.dark-theme .user-select-dropdown option {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.45rem;
     background-color: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: 12px;
-    padding: 0.55rem 0.85rem;
+    padding: 0 0.85rem;
+    height: 40px;
     color: #475569;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .nav-btn:hover {
@@ -515,7 +520,8 @@ body.dark-theme .nav-btn.active {
     gap: 0.5rem;
     border: none;
     border-radius: 12px;
-    padding: 0.65rem 1.25rem;
+    padding: 0 1.25rem;
+    height: 40px;
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
@@ -596,12 +602,14 @@ body.dark-theme .btn-secondary:hover {
 }
 
 .btn-lg {
-    padding: 0.85rem 1.75rem;
+    padding: 0 1.75rem;
+    height: 48px;
     font-size: 1rem;
 }
 
 .btn-sm {
-    padding: 0.4rem 0.75rem;
+    padding: 0 0.75rem;
+    height: 34px;
     font-size: 0.8rem;
     border-radius: 8px;
 }
